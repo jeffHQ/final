@@ -1,0 +1,37 @@
+<html>
+    <title>server2: 5001</title>
+    <body id="load">
+        <h2>Hello Server2</h2>
+        <div class="container" id="ra">
+            <p>Lista: </p>
+        </div>
+    </body>
+    <script>
+        document.getElementById('load').onload = function(e) {
+            e.preventDefault();
+            const URL = 'http://127.0.0.1:5000/salas';
+            fetch(URL, {
+                method: 'GET'
+            }).then(function(response) {
+                console.log('response: ', response)
+                return response.json();
+            }).then(function(jsonResponse) {
+                console.log('jsonResponse: ', jsonResponse);
+                const total = jsonResponse['total_peliculas'];
+                
+
+
+                for (let i = 0; i < total; i++) {
+                    
+                    const indice = document.createElement("h1")
+                    indice.textContent = jsonResponse['peliculas'][i]['nombre_pelicula'];
+                    const appimg = document.querySelector("#ra");
+                    appimg.insertAdjacentElement("beforeEnd", indice);
+                }
+
+            }).catch(function(error) {
+                console.log('error: ', error);
+            });
+        }
+    </script>
+</html>
